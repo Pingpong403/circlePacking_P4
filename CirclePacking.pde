@@ -14,7 +14,7 @@ void mouseReleased()
 int CIRCLE_COUNT = 1000;
 double GOLDEN_RATIO = (1 + sqrt(5)) / 2;
 
-float circleSize = (float)2000 / CIRCLE_COUNT;
+float circleSize = (float)2000 / CIRCLE_COUNT + 1;
 float spacing = (float)500 / CIRCLE_COUNT;
 
 float angleOfSeparation = (2 * PI) / (float)GOLDEN_RATIO;

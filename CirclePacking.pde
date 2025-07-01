@@ -13,6 +13,10 @@ void mouseReleased()
 
 int CIRCLE_COUNT = 1000;
 double GOLDEN_RATIO = (1 + sqrt(5)) / 2;
+double SILVER_RATIO = 1 + sqrt(2);
+double BRONZE_RATIO = (3 + sqrt(13)) / 2;
+double COPPER_RATIO = 2 + sqrt(5);
+double PLASTIC_RATIO = (2 / sqrt(3)) * cosh((1 / 3) * arcosh(3 * sqrt(3) / 2));
 
 float circleSize = (float)2000 / CIRCLE_COUNT + 1;
 float spacing = (float)500 / CIRCLE_COUNT;
@@ -24,6 +28,11 @@ float angle = 0;
 Circle[] circles = new Circle[CIRCLE_COUNT];
 Slider angleSlider = new Slider(new Position(950, 670), "Angle", 200, angleOfSeparation / 2 / PI % 1);
 Slider dummySlider = new Slider(new Position(), "", 0, 0);
+Button phiButton = new Button(new Position(10, 10), "Golden");
+Button deltaButton = new Button(new Position(10, 60), "Silver");
+Button betaButton = new Button(new Position(10, 110), "Bronze");
+Button kappaButton = new Button(new Position(10, 160), "Copper");
+Button rhoButton = new Button(new Position(10, 210), "Plastic");
 
 Slider selectedSlider = dummySlider; // so selectedSlider always points to a slider
 boolean sliderPicked = false;
@@ -43,6 +52,19 @@ void draw() {
   
   // update slider
   if (mousePressed) {
+    // buttons
+    if (phiButton.isMouseWithin()) phiButton.press();
+    else phiButton.unpress();
+    if (deltaButton.isMouseWithin()) deltaButton.press();
+    else deltaButton.unpress();
+    if (betaButton.isMouseWithin()) betaButton.press();
+    else betaButton.unpress();
+    if (kappaButton.isMouseWithin()) kappaButton.press();
+    else kappaButton.unpress();
+    if (rhoButton.isMouseWithin()) rhoButton.press();
+    else rhoButton.unpress();
+    
+    // sliders
     if (!sliderPicked) {
       if (angleSlider.isMouseWithin()) {
         selectedSlider = angleSlider;
@@ -58,6 +80,31 @@ void draw() {
     }
   }
   if (mouseChoose) {
+    if (phiButton.isMouseWithin()) {
+      angleOfSeparation = (2 * PI) / (float)GOLDEN_RATIO;
+      angleSlider.setRatio(angleOfSeparation / 2 / PI % 1);
+    }
+    else if (deltaButton.isMouseWithin()) {
+      angleOfSeparation = (2 * PI) / (float)SILVER_RATIO;
+      angleSlider.setRatio(angleOfSeparation / 2 / PI % 1);
+    }
+    else if (betaButton.isMouseWithin()) {
+      angleOfSeparation = (2 * PI) / (float)BRONZE_RATIO;
+      angleSlider.setRatio(angleOfSeparation / 2 / PI % 1);
+    }
+    else if (kappaButton.isMouseWithin()) {
+      angleOfSeparation = (2 * PI) / (float)COPPER_RATIO;
+      angleSlider.setRatio(angleOfSeparation / 2 / PI % 1);
+    }
+    else if (rhoButton.isMouseWithin()) {
+      angleOfSeparation = (2 * PI) / (float)PLASTIC_RATIO;
+      angleSlider.setRatio(angleOfSeparation / 2 / PI % 1);
+    }
+    phiButton.unpress();
+    deltaButton.unpress();
+    betaButton.unpress();
+    kappaButton.unpress();
+    rhoButton.unpress();
     selectedSlider = dummySlider;
     sliderPicked = false;
   }
@@ -93,6 +140,13 @@ void draw() {
   for (int i = CIRCLE_COUNT - 1; i >= 0; i--) {
     circles[i].display();
   }
+  
+  phiButton.display();
+  deltaButton.display();
+  betaButton.display();
+  kappaButton.display();
+  rhoButton.display();
+  
   angleSlider.display();
   noStroke();
   fill(0);
